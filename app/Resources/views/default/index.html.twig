@@ -1,0 +1,118 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	Invoice Form
+{% endblock %}
+
+{% block body %}
+	<div id="pdf-content">
+		<form role="form" data-toggle="validator" id="invoice-form">
+			<div class="row">
+				<div class="col-md-6"></div>
+				<div class="col-md-6"><h1>DEVELOPMENT INVOICE</h1></div>
+			</div>
+			<div class="row">
+				<div class="col-md-6"></div>
+				<div class="col-md-6">
+					<table>
+						<tr class="form-group">
+							<td>Date:</td>
+							<td><input type="text" class="form-control" name="date" value="{{ date }}" data-error="This is required" required><div class="help-block with-errors"></div></td>
+						</tr>
+						<tr>
+							<td>Invoice #:</td>
+							<td><input type="text" class="form-control" name="invoice_no"></td>
+						</tr>
+						<tr>
+							<td>Customer ID:</td>
+							<td><input type="text" class="form-control" name="cust_no"></td>
+						</tr>
+					</table>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6 form-group">
+					<div>Bill To:</div>
+					<textarea rows="5" class="form-control" name="bill_to" data-error="This is required" required></textarea>
+					<div class="help-block with-errors"></div>
+				</div>
+				<div class="col-md-6"></div>
+			</div>
+			<br />
+			<br />
+			<br />
+			<div class="table-responsive">
+				<table class="table">
+					<thead>
+						<tr>
+							<th>Developer</th>
+							<th>Description</th>
+							<th>Hourly Rate</th>
+							<th>Hours</th>
+							<th>Total</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody id="data-row">
+						<tr>
+							<td class="form-group"><input type="text" class="form-control" name="developer[]"></td>
+							<td class="form-group"><input type="text" class="form-control" name="description[]" data-error="This is required" required><div class="help-block with-errors"></div></td>
+							<td class="form-group"><input type="text" class="form-control row-rate userinput" name="hourly_rate[]" data-error="This is required" required><div class="help-block with-errors"></div></td>
+							<td class="form-group"><input type="text" class="form-control row-hours userinput" name="hours[]" data-error="This is required" required><div class="help-block with-errors"></div></td>
+							<td class="form-group"><input type="text" class="form-control row-total" name="total[]" readonly></td>
+							<td class="form-group"><a class="btn btn-default remove-row" href="#" role="button">Remove</a></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<a id="add-row" class="btn btn-success" href="#" role="button">Add Row</a>
+				</div>
+			</div>
+			<br />
+			<br />
+			<br />
+			<div class="row">
+				<div class="col-md-6">
+					<div>Comments or Special Instructions:</div>
+					<textarea rows="5" class="form-control" name="comments"></textarea>
+				</div>
+				<div class="col-md-6">
+					<table>
+						<tr>
+							<td>Subtotal:</td>
+							<td><input type="text" id="invoice-subtotal" class="form-control" readonly></td>
+						</tr>
+						<tr>
+							<td>Tax:</td>
+							<td><input type="text" id="invoice-tax" class="form-control userinput" placeholder="E.g. enter 6.25 for 6.25%"></td>
+						</tr>
+						<tr>
+							<td>Grand Total:</td>
+							<td><input type="text" id="invoice-total" class="form-control" readonly></td>
+						</tr>
+					</table>
+				</div>
+			</div>
+			<br />
+			<br />
+			<br />
+			<div class="row">
+				<div class="col-md-12 form-group">
+					<button class="btn btn-primary">Save as PDF</button>
+				</div>
+			</div>
+		</form>
+	</div>
+{% endblock %}
+
+{% block javascripts %}
+	<script src="{{ asset('assets/vendor/jspdf/dist/jspdf.min.js') }}"></script>
+	<script src="{{ asset('assets/vendor/jspdf/libs/html2canvas/dist/html2canvas.js') }}"></script>
+	<script src="{{ asset('assets/vendor/bootstrap-validator/dist/validator.min.js') }}"></script>
+	<script src="{{ asset('assets/js/invoice.js') }}"></script>
+	<script>
+		InvoiceApp.init();
+	</script>
+{% endblock %}
